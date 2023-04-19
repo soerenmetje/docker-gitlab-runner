@@ -4,7 +4,7 @@ Run a Gitlab runner inside a Docker container.
 This is especially beneficial to set up specific runners for a single GitLab project or group.
 
 The runner uses the Docker executor and also has privileged access to Docker on the host.
-This enables the runner to build and push docker images.
+This enables the runner to be used for [building and pushing docker images](#bonus-build-and-push-docker-images-in-gitlab-cicd).
 
 ## Setup 
 
