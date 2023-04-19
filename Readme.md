@@ -22,13 +22,11 @@ docker compose up -d
 
 ### TLS Handshake Error
 You may observe *tls handshake error* in your jobs. 
-To fix this, you need to set a lower MTU for docker daemon:
+To fix this, you need to set a lower MTU for docker daemon.
 The exact MTU depends on your network configuration.
-In my Openstack VM, 1450 works for me.
-```shell
-nano /etc/docker/daemon.json
-```
-Content:
+On my Openstack VM, 1450 worked fine.
+
+Set mtu in `/etc/docker/daemon.json`:
 ```json
 {
   "mtu": 1450
