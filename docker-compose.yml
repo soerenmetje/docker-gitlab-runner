@@ -1,0 +1,16 @@
+version: '3'
+services:
+  runner:
+    image: "gitlab/gitlab-runner:latest"
+    restart: unless-stopped
+    volumes:
+      - "./config:/etc/gitlab-runner"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      # Fix tls handshake error on Openstack VMs - may need to decrease MTU in your case if error persist
+      # ALSO: configure MTU of docker daemon
+      com.docker.network.driver.mtu: 1450
