@@ -3,8 +3,11 @@
 Run a Gitlab runner inside a Docker container. 
 This is especially beneficial for setting up multiple runners each specific for a single GitLab project or group.
 
-The runner uses the Docker executor and also has privileged access to Docker on the host.
+The runner uses the Docker executor and has privileged access to Docker.
 This enables the runner to be used for [building and pushing docker images](#bonus-build-and-push-docker-images-in-gitlab-cicd).
+However, this also introduces the [security risk of a container breakout](https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#docker-in-docker-with-tls-enabled-in-the-docker-executor). For a setup without privileged mode you can check out [Kaniko or Buildah](https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#docker-alternatives). 
+
+Because of the [Docker-in-Docker setup](https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#docker-in-docker-with-tls-enabled-in-the-docker-executor) and therefore the separate docker daemon, GitLab jobs are not able to access containers, images, or volumes outside the job.
 
 ## Setup 
 
@@ -53,7 +56,7 @@ stages:
     DOCKER_BUILD_DIR: "."  # OPTIONAL
     DOCKER_DOCKERFILE: ""  # OPTIONAL
   services:
-    - docker:20.10-dind
+    - docker:23.0-dind
   before_script:
     - docker info
     - echo logging in gitlab-ci-token to $CI_REGISTRY
